@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel ="stylesheet" href="{% static 'css/mystyle.css' %}">
+
+    <!--datatable cdn start for serach-->
+<script src="https://cdn.datatables.net/3.0.1/js/dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/4.0.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/4.0.1/js/buttons.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfmake@0.3.11/build/pdfmake.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfmake@0.3.11/build/vfs_fonts.js"></script>
+
+<link rel ="stylesheet" href="https://cdn.datatables.net/3.0.1/css/dataTables.dataTables.min.css">
+<link rel ="stylesheet" href="https://cdn.datatables.net/buttons/4.0.1/css/buttons.dataTables.min.css">
+
+
+
+<script>
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+		}
+	}
+});
+</script>
+    <!--datatable cdn end for serach-->
+</head>  
+<body>
+    
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <a class="navbar-brand" href="#">Hospital Mangament System</a>   
+        <button  class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myMenu"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="myMenu">
+                <ul class="navbar-nav text-center ml-auto">
+                    {% if not request.user.is_staff %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}"><i class="fa-solid fa-house"></i> Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'about' %}"><i class="fa-regular fa-circle-user"></i> About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}"><i class="fa-solid fa-phone"></i></i> Contact</a></li>
+                    {% endif %}
+                    {% if request.user.is_staff %}
+
+                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle=dropdown href="#">Doctor</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{% url 'add_doctor' %}">Add Doctor</a>
+                            <a class="dropdown-item" href="{% url 'view_doctor' %}">View Doctor</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle=dropdown href="#">Patient</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{% url 'add_patient' %}">Add Patient</a>
+                            <a class="dropdown-item" href="{% url 'view_patient' %}">View Patient</a>
+                        </div>
+                    </li>    
+                
+                    
+                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle=dropdown href="#">Appointment</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{% url 'add_appointment' %}">Add Appointment</a>
+                            <a class="dropdown-item" href="{% url 'view_appointment' %}">View Appointment</a>
+                        </div>
+                    </li>    
+    
+                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                    {% endif %}
+                </ul>   
+            </div>
+    </nav>   
+    {% block content %}     
+    {% endblock %}  
+
+</body>
+</html>
